@@ -9,17 +9,17 @@ var admin = document.querySelector("#exampleInputAdmin");
 
 
 var field = document.querySelectorAll("#form-user-create [name]");
+var user = {};
 
 field.forEach(function(field, index){
 
     if(field.name == "gender") {
         if(field.checked) {
-            console.log("SIM", field)
+            user.gender
         }
     } else {
-
+        user[field.name] = field.value;
     }
 
-    console.log(field.name);
-
 })
+console.log(user);
