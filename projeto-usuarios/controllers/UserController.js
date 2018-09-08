@@ -40,7 +40,7 @@ class UserController {
             let file = elements[0].files[0];
     
             fileReader.onload = () => {
-                callback(fileReader.result);
+                resolve(fileReader.result);
             }
     
             fileReader.onerror = (e) => {
