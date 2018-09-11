@@ -6,6 +6,7 @@ class UserController {
         this.tableEl = document.getElementById(tableId);
         this.onSubmit();
         this.onEditCancel();
+        this.selectAll();
     }
 
     onEditCancel() {
@@ -94,6 +95,9 @@ class UserController {
             this.getPhoto(this.formEl).then(
                 (content) => {
                     values.photo = content;
+
+                    this.insert(values);
+
                     this.addLine(values);
 
                     this.formEl.reset();
@@ -176,6 +180,38 @@ class UserController {
             user.admin
         );
         
+    }
+
+    getUsersStorage() {
+        let users = [];
+
+        if(sessionStorage.getItem("user")) {
+            users = JSON.parse(sessionStorage.getItem("user"));
+        }
+
+        return users;
+    }
+
+    selectAll() {
+        let users = this.getUsersStorage();
+        
+        users.forEach(dataUser => {
+
+            let user = new User();
+
+            user.loadFromJSON(dataUser);
+
+            this.addLine(user);
+        })
+    }
+
+    insert(data) {
+
+        let users = this.getUsersStorage();
+
+        users.push(data);
+
+        sessionStorage.setItem("user",JSON.stringify(users));
     }
 
     addLine(dataUser) {
