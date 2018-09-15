@@ -31,9 +31,6 @@ class UserController {
 
             let result = Object.assign({}, userOld, values);
 
-
-            
-
             this.showPanelCreate();
 
             this.getPhoto(this.formUpdateEl).then(
@@ -47,6 +44,8 @@ class UserController {
 
                     let user = new User();
                     user.loadFromJSON(result);
+
+                    user.save();
 
                     this.getTr(user, tr);
 
@@ -86,7 +85,7 @@ class UserController {
                 (content) => {
                     values.photo = content;
 
-                    this.insert(values);
+                    values.save();
 
                     this.addLine(values);
 
@@ -195,15 +194,6 @@ class UserController {
         })
     }
 
-    insert(data) {
-
-        let users = this.getUsersStorage();
-
-        users.push(data);
-
-        //sessionStorage.setItem("user",JSON.stringify(users));
-        localStorage.setItem("user",JSON.stringify(users));
-    }
 
     addLine(dataUser) {
 
