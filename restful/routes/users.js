@@ -8,15 +8,21 @@ let db = new NeDB({
 module.exports = (app) => {
 
     app.get('/users', (req, res) => {
-        res.statusCode = 200;
-        res.setHeader('Content-type','text/json');
-        res.json({
-            users: [{
-                name: 'Hcode',
-                email: 'contato@gmail.com',
-                id: 1
-            }]
-        });
+
+        db.find({}).sort({name:1}).exec((err, users) => {
+            if(err) {
+                res.status(400).json({
+                    error: err
+                })
+            } else {
+                res.statusCode = 200;
+                res.setHeader('Content-Type','application/json');
+                res.json({
+                    users
+                })
+            }
+        })
+
     })
     
     app.post('/users/admin', (req, res) => {
