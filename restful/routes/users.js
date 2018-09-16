@@ -1,7 +1,7 @@
 let express = require('express');
 let routes = express.Router();
 
-routes.get('/users', (req, res) => {
+routes.get('/', (req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-type','text/json');
     res.json({
@@ -10,6 +10,14 @@ routes.get('/users', (req, res) => {
             email: 'contato@gmail.com',
             id: 1
         }]
+    });
+})
+
+routes.get('/admin', (req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-type','text/json');
+    res.json({
+        users: []
     });
 })
 
