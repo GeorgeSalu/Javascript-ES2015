@@ -198,8 +198,7 @@ class UserController {
                 this.addLine(user);
             })
             
-        }
-        
+        };
 
     }
 
