@@ -199,6 +199,7 @@ class UserController {
             })
             
         };
+        ajax.send();
 
     }
 
