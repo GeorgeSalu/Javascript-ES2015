@@ -22,7 +22,7 @@ class HttpRequest {
 
             let ajax = new XMLHttpRequest();
     
-            ajax.open(method.toUpperCase(), '/users');
+            ajax.open(method.toUpperCase(), url);
     
             ajax.onerror = event => {
                 reject(e);
@@ -30,10 +30,11 @@ class HttpRequest {
 
             ajax.onload = event => {
                 
-                let obj = {  };
+                let obj = { };
                 try {
                     
                     obj = JSON.parse(ajax.responseText);
+                    console.log(obj);
                 } catch(e) {
                     reject(e);
                     console.log(e);
@@ -41,7 +42,10 @@ class HttpRequest {
                 
                 resolve(obj);                
             };
-            ajax.send();
+
+            ajax.setRequestHeader('Content-Type', 'application/json');
+
+            ajax.send(JSON.stringify(params));
         });
 
 
