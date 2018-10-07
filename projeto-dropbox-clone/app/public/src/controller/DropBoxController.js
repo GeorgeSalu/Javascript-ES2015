@@ -33,12 +33,32 @@ class DropBoxController {
         });
 
         this.inputFileEl.addEventListener('change', event => {
-           this.updloadTask(event.target.files);
+            this.btnSendFile1.disable = true;
+
+           this.updloadTask(event.target.files).then( responses => {
+               responses.forEach(resp => {
+                    console.log(resp.files['input-file']);
+
+                    this.getFirebaseRef().push().set(resp.files['input-file']);
+               });
+               this.uploadComplete();
+           });
 
            this.modalShow();
            this.inputFileEl.value = '';
 
         })
+    }
+
+    uploadComplete() {
+
+        this.modalShow(false);
+        this.inputFileEl.value = '';
+        this.btnSendFile1.disable = false;
+    }
+
+    getFirebaseRef() {
+        return firebase.database().ref('files');
     }
 
     modalShow(show = true) {
