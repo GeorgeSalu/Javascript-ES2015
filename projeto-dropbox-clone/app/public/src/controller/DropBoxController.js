@@ -49,14 +49,18 @@ class DropBoxController {
         this.getSelection().forEach(li => {
 
             let file = JSON.parse(li.dataset.file);
+            let key = li.dataset.key;
 
-            promises.push(new Promise((resolve, reject) => {
+            let formData = new FormData();
 
-            }));
+            formData.append('path', file.path);
+            formData.append('key', key);
 
-            return Promise.all(promises);
+            promises.push(this.ajax('/file','DELETE', formData));
+
         });
-
+        
+        return Promise.all(promises);
     }
 
     initEvents() {
@@ -64,6 +68,12 @@ class DropBoxController {
         this.btnDelete.addEventListener('click',e => {
 
             this.removeTask().then(responses => {
+
+                responses.forEach(response => {
+                    if(response.fields.key) {
+                        this.getFirebaseRef().child(response.fields.key).remove();
+                    }
+                })
                 
             }).catch(err => {
 
