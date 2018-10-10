@@ -42,7 +42,34 @@ class DropBoxController {
 
     }
 
+    removeTask() {
+
+        let promises = [];
+
+        this.getSelection().forEach(li => {
+
+            let file = JSON.parse(li.dataset.file);
+
+            promises.push(new Promise((resolve, reject) => {
+
+            }));
+
+            return Promise.all(promises);
+        });
+
+    }
+
     initEvents() {
+
+        this.btnDelete.addEventListener('click',e => {
+
+            this.removeTask().then(responses => {
+                
+            }).catch(err => {
+
+            })
+
+        });
 
         this.btnRename.addEventListener('click', e => {
 
@@ -118,43 +145,52 @@ class DropBoxController {
         this.snackModalEL.style.display = (show) ? 'block' : 'none';
     }
 
+    ajax(url, method = 'GET', formData = new FormData(), onprogress = function(){}, onloadstart = function(){}) {
+
+        return new Promise((resolve, reject) => {
+
+            let ajax = new XMLHttpRequest();
+            ajax.open(method, url);
+    
+            ajax.onload = event => {
+                this.modalShow(false);
+                try {
+                    resolve(JSON.parse(ajax.responseText));
+                } catch (e) {
+                    reject(e);
+                }
+    
+            };
+    
+            ajax.onerror = event => {
+                this.modalShow(false);
+                reject(event);
+            };
+    
+            ajax.upload.onprogress = onprogress; 
+    
+            onloadstart();
+    
+            ajax.send(formData);
+        })
+
+
+    }
+
     updloadTask(files) {
 
         let promises = [];
 
         [...files].forEach(file => {
-            promises.push(new Promise((resolve, reject) => {
-                let ajax = new XMLHttpRequest();
-                ajax.open('POST', '/upload');
+            
+            let formData = new FormData();
 
-                ajax.onload = event => {
-                    this.modalShow(false);
-                    try {
-                        resolve(JSON.parse(ajax.responseText));
-                    } catch (e) {
-                        reject(e);
-                    }
+            formData.append('input-file', file);
 
-                };
-
-                ajax.onerror = event => {
-                    this.modalShow(false);
-                    reject(event);
-                };
-
-                ajax.upload.onprogress = event => {
-                    this.uploadProgress(event, file);
-                }
-
-                let formData = new FormData();
-
-                formData.append('input-file', file);
-
+            promises.push(this.ajax('/upload', 'POST', formData, () => {
+                this.uploadProgress(event, file);
+            }, () => {
                 this.startUploadTime = Date.now();
-
-
-                ajax.send(formData);
-
             }));
         });
 
