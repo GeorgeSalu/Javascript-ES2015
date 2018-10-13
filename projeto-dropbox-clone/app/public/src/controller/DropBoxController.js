@@ -113,7 +113,7 @@ class DropBoxController {
 
         });
 
-        this.listFilesEl.onEventListener('selectionchange', e => {
+        this.listFilesEl.addEventListener('selectionchange', e => {
 
             switch (this.getSelection().length) {
                 case 0:
