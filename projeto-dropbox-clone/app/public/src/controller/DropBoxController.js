@@ -4,6 +4,8 @@ class DropBoxController {
 
         this.currentFolder = ['hcode'];
 
+        this.navEl = document.querySelector('#browser-location');
+
         this.onselectionchange = new Event('selectionchange');
 
         this.btnSendFile1 = document.querySelector('#btn-send-file');
@@ -20,7 +22,7 @@ class DropBoxController {
 
         this.connectFirebase();
         this.initEvents();
-        this.readFiles();
+        this.openFolder();
     }
 
     connectFirebase() {
@@ -162,8 +164,11 @@ class DropBoxController {
         this.btnSendFile1.disable = false;
     }
 
-    getFirebaseRef() {
-        return firebase.database().ref('files');
+    getFirebaseRef(path) {
+
+        if(!path) path = this.currentFolder.join('/');
+
+        return firebase.database().ref(path);
     }
 
     modalShow(show = true) {
@@ -457,7 +462,35 @@ class DropBoxController {
         return li;
     }
 
+    openFolder() {
+
+        if(this.lastFolder) this.getFirebaseRef(this.lastFolder).off('value');
+
+        this.renderNav();
+        this.readFiles();
+
+    }
+
+    renderNav() {
+        
+    }
+
     initEventsLi(li) {
+
+        li.addEventListener('dblclick', e => {
+
+            let file = JSON.parse(li.dataset.file);
+
+            switch(file.type) {
+                case 'folder':
+                    this.currentFolder.push(file.name);
+                    this.openFolder();
+                    break;
+                default:
+                    window.open('/file?path='+file.path);
+            }
+
+        });
 
         li.addEventListener('click', e => {
 
@@ -511,6 +544,9 @@ class DropBoxController {
     }
 
     readFiles() {
+
+        this.lastFolder = this.currentFolder.join('/');
+
         this.getFirebaseRef().on('value', snapshot => {
 
             this.listFilesEl.innerHTML = '';
@@ -520,7 +556,11 @@ class DropBoxController {
                 let key = snapshotItem.key;
                 let data = snapshotItem.val();
 
-                this.listFilesEl.appendChild(this.getFileView(data, key));
+                if(data.type) {
+
+                    this.listFilesEl.appendChild(this.getFileView(data, key));
+                }
+
 
             })
 
