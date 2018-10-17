@@ -131,7 +131,6 @@ class WhatsAppController {
         this.el.formPanelAddContact.on('submit', e => {
             e.preventDefault();
 
-            let formData = new 
 
         })
 
