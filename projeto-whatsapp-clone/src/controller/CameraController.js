@@ -7,6 +7,7 @@ export class CameraController {
             video: true
         }).then(stream => {
 
+            this._stream = stream;
             this._videoEl.src = URL.createObjectURL(stream);
             this._videoEl.play();
 
@@ -14,6 +15,12 @@ export class CameraController {
 
         });
 
+    }
+
+    stop(){
+        this._stream.getTracks().forEach(track => {
+            track.stop();
+        });
     }
 
 }
