@@ -1,4 +1,4 @@
-class CameraController {
+export class CameraController {
 
     constructor(videoEl) {
         this._videoEl = videoEl;
@@ -11,7 +11,7 @@ class CameraController {
             this._videoEl.play();
 
         }).catch(err => {
-            
+
         });
 
     }
