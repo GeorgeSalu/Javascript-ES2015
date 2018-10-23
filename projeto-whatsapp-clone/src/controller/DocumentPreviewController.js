@@ -13,12 +13,13 @@ export class DocumentPreviewController {
 
         return new Promise((s, f) => {
 
+            let reader = new FileReader();
+
             switch(this._file.type) {
                 case 'image/png':
                 case 'image/jpeg':
                 case 'image/jpg':
                 case 'image/gif':
-                    let reader = new FileReader();
                     reader.onload = e => {
                         s({
                             src: reader.result,
@@ -32,6 +33,51 @@ export class DocumentPreviewController {
                 break;
 
                 case 'application/pdf':
+
+
+                    reader.onload = e => {
+
+                        pdfjsLib.getDocument(new Uint8Array(reader.result)).then(pdf => {
+
+                            pdf.getPage(1).then(page => {
+                                
+                                let viewport = page.getViewport(1);
+
+                                let canvas = document.createElement('canvas');
+                                let canvasContext = canvas.getContext('2d');
+
+                                canvas.width = viewport.width;
+                                canvas.height = viewport.height;
+
+                                page.render({
+                                    canvasContext,
+                                    viewport
+                                }).then(() => {
+
+                                    let _s = (pdf.numPages > 1) ? 's': '';
+
+                                    s({
+                                        src: canvas.toDataURL('image/png'),
+                                        info: `${pdf.numPages} paginas${_s}`
+                                    })
+
+                                }).catch(err => {
+                                    f(err);
+                                });
+
+                            }).catch(err => {
+                                f(err);
+                            })
+
+                        }).catch(err => {
+
+                            e(err);
+
+                        })
+
+                    }
+
+                    reader.readAsArrayBuffer(file);
                     
                 break;
 
