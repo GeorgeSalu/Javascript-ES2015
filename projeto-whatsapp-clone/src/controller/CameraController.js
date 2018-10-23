@@ -23,4 +23,18 @@ export class CameraController {
         });
     }
 
+    takePicture(mimeType = 'image/png') {
+
+        let canvas = document.createElement('canvas');
+
+        canvas.setAttribute('height', this._videoEl.videoHeight);
+        canvas.setAttribute('width', this._videoEl.videoWidth);
+
+        let contex = canvas.getContext('2d');
+
+        contex.drawImage(this._videoEl, 0, 0, canvas.width, canvas.height);
+
+        return canvas.toDataURL(mimeType);
+    }
+
 }
