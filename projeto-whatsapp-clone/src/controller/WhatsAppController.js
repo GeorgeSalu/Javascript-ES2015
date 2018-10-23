@@ -1,5 +1,6 @@
 import {Format} from './../util/Format';
 import {CameraController} from './CameraController';
+import {MicrofoneController} from './MicrofoneController';
 import {DocumentPreviewController} from './DocumentPreviewController';
 
 export default class WhatsAppController {
@@ -291,10 +292,14 @@ export default class WhatsAppController {
             this.el.btnSendMicrophone.hide();
 
             this.startRecordMicrophoneTime();
+
+            this._microphoneController = new MicrofoneController();
+
         });
 
         this.el.btnCancelMicrophone.on('click', e => {
 
+            this._microphoneController.stop();
             this.closeRecordMicrophone();
 
         });
