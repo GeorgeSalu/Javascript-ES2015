@@ -306,14 +306,14 @@ export default class WhatsAppController {
 
         this.el.btnCancelMicrophone.on('click', e => {
 
-            this._microphoneController.startRecorder();
+            this._microphoneController.stopRecorder();
             this.closeRecordMicrophone();
 
         });
 
         this.el.btnFinishMicrophone.on('click', e => {
 
-            this._microphoneController.startRecorder();
+            this._microphoneController.stopRecorder();
             this.closeRecordMicrophone();
 
         });

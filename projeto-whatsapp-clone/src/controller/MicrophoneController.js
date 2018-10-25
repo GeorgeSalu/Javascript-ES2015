@@ -87,7 +87,7 @@ export class MicrophoneController  extends ClassEvent {
 
         this._recordMicrophoneInterval = setInterval(() => {
 
-            this.trigger('recordtime', Date.now() - start);
+            this.trigger('recordtimer', Date.now() - start);
 
         }, 100);
 
