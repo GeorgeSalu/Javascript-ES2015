@@ -15,7 +15,7 @@ export class ClassEvent {
     trigger() {
 
         let args = [...arguments];
-        let eventName = args.shift;
+        let eventName = args.shift();
 
         args.push(new Event(eventName));
 
