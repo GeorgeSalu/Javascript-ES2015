@@ -3,6 +3,7 @@ import {CameraController} from './CameraController';
 import {MicrophoneController} from './MicrophoneController';
 import {DocumentPreviewController} from './DocumentPreviewController';
 import {Firebase} from './../util/Firebase';
+import {User} from './../model/User';
 
 export default class WhatsAppController {
 
