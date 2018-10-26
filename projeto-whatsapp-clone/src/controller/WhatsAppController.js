@@ -20,28 +20,29 @@ export default class WhatsAppController {
     initAuth(){
 
         this._firebase.initAuth()
-                      .then((response, token) => {
+            .then(response => {
 
-                          this._user = new User();
+                this._user = new User();
 
-                          let userRef = User.findByEmail(response.user.email);
+                let userRef = User.findByEmail(response.email);
 
-                          userRef.set({
-                              nome: response.user.displayName,
-                              email: response.user.email,
-                              photo: response.user.photoURL
-                          }).then(() => {
-        
-                                this.el.appContent.css({
-                                    display: 'flex'
-                                });
+                userRef.set({
+                    nome: response.displayName,
+                    email: response.email,
+                    photo: response.photoURL
+                }).then(() => {
 
-                          });
-                      })
-                      .catch(err => {
-                          console.log(err);
-                      })
+                    this.el.appContent.css({
+                        display: 'flex'
+                    });
 
+                }).catch(err => {
+                    console.log('ee', err);
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            })
 
     }
     
