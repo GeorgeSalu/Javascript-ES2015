@@ -41,9 +41,18 @@ export default class WhatsAppController {
 
                 });
 
-                this.el.appContent.css({
-                    display: 'flex'
-                });
+
+                this._user.name = response.displayName;
+                this._user.email = response.email;
+                this._user.photo = response.photoURL;
+
+                this._user.save().then(() => {
+                    this.el.appContent.css({
+                        display: 'flex'
+    
+                    });
+
+                })
 
                
             })
