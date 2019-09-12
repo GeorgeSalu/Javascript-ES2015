@@ -16,8 +16,30 @@ router.get('/', function(req, res, next) {
     });
 
   })
-
-  
 });
+
+router.get('/contacts', function(req, res, next) {
+  res.render('contact', {
+    title: 'Restaurante Saborosos!'
+  });
+})
+
+router.get('/menus', function(req, res, next) {
+  res.render('menu', {
+    title: 'Restaurante Saborosos!'
+  });
+})
+
+router.get('/reservations', function(req, res, next) {
+  res.render('reservation', {
+    title: 'Restaurante Saborosos!'
+  });
+})
+
+router.get('/services', function(req, res, next) {
+  res.render('services', {
+    title: 'Restaurante Saborosos!'
+  });
+})
 
 module.exports = router;
