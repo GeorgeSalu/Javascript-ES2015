@@ -20,25 +20,33 @@ router.get('/', function(req, res, next) {
 
 router.get('/contacts', function(req, res, next) {
   res.render('contact', {
-    title: 'Restaurante Saborosos!'
+    title: 'Restaurante Saborosos!',
+    background: 'images/img_bg_3.jpg',
+    h1: 'Diga um oi'
   });
 })
 
 router.get('/menus', function(req, res, next) {
   res.render('menu', {
-    title: 'Restaurante Saborosos!'
+    title: 'Restaurante Saborosos!',
+    background: 'images/img_bg_1.jpg',
+    h1: 'Saborei o nosso menu'
   });
 })
 
 router.get('/reservations', function(req, res, next) {
   res.render('reservation', {
-    title: 'Restaurante Saborosos!'
+    title: 'Restaurante Saborosos!',
+    background: 'images/img_bg_2.jpg',
+    h1: 'reserve uma messa'
   });
 })
 
 router.get('/services', function(req, res, next) {
   res.render('services', {
-    title: 'Restaurante Saborosos!'
+    title: 'Restaurante Saborosos!',
+    background: 'images/img_bg_1.jpg',
+    h1: 'é um prazer poder servir'
   });
 })
 
