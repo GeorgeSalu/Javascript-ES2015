@@ -1,4 +1,4 @@
-## Javascript Moderno
+### Javascript Moderno
 
 Deseja aprender a Linguagem de Programação mais importante para o ambiente Web hoje em dia? Que tal aprender a criar projetos profissionais como o WhatsApp Clone, enviando mensagens em tempo real, ativando a câmera, o microfone via JavaScript? Ou será que chegou a hora de elevar o seu conhecimento em JavaScript para além de alerts e simples validações? 
 
